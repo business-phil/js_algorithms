@@ -19,34 +19,33 @@ function MinHeap() {
 		}
 	}
 	this.insert = function(val) {
-		var temp,
-			index = data.length,
-			parent = Math.floor(index / 2);
-		data[index] = val;
+		var index = data.length;
+		var parent = Math.floor(index / 2);
+		data.push(val);
 		while (index > 1 && data[parent] > val) {
-			temp = data[index];
 			data[index] = data[parent];
-			data[parent] = temp;
+			data[parent] = val;
 			index = parent;
 			parent = Math.floor(index / 2);
 		}
 		return data;
 	}
 	this.contains = function(val) {
-		return rContains(val, data, 1);
+		return rContains(val, 1);
 	}
 
-	function rContains(val, arr, index) {
-		if (arr[index] == val) { return true; }
-		var result,
-			left = index * 2,
-			right = left + 1;
-		if (arr[left] != undefined) {
-			result = rContains(val, arr, left);
+	function rContains(val, index) {
+		if (data[index] == val) { return true; }
+		var result;
+		var branch = index * 2,
+		// check left branch
+		if (data[branch] != undefined) {
+			result = rContains(val, data, branch);
 			if (result) { return true; }
 		}
-		if (arr[right] != undefined) {
-			result = rContains(val, arr, right);
+		// check right branch
+		if (data[branch + 1] != undefined) {
+			result = rContains(val, data, branch + 1);
 			if (result) { return true; }
 		}
 		return false;
